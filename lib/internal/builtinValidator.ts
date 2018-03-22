@@ -10,6 +10,14 @@ export default class BuiltinValidator {
     validators[builtin.v] = this.hasChild;
   }
 
+  validate(element: Element, children: Element[]) {
+    const tagName = element.tagName;
+    const func = this.validators[tagName];
+    if (func) {
+      func(element, children);
+    }
+  }
+
   private hasChild(element: Element, children: Element[]) {
     if (children.length <= 0) {
       throw new Error('Element must have at least one child');
