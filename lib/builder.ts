@@ -14,19 +14,21 @@ export class Builder {
   build(element: Element) {
     const children = element.children;
     for (const child of [...children]) {
-      this.handleChild(child);
+      this.handleElement(child);
     }
   }
 
-  private handleChild(element: Element) {
+  private handleElement(element: Element) {
     const name = element.tagName;
     if (name.length <= 0) {
       throw new Error('Element.tagName is empty');
     }
     const children = [...element.children];
+    this.builtinValidator.validate(element, children);
 
     if (name[0] === name[0].toUpperCase()) {
-      // external name or ref
+      // External or Ref
+
     } else {
       // builtin
       // tslint:disable-next-line no-any
@@ -36,11 +38,15 @@ export class Builder {
       }
 
       // Validate builtin element
-      this.handleBuiltin(element, children);
+      this.handleBuiltin(element);
     }
   }
 
-  private handleBuiltin(element: Element, children: Element[]) {
-    this.builtinValidator.validate(element, children);
+  private handleBuiltin(element: Element) {
+    this.handler.handleBuiltin(element);
+  }
+
+  private handleExternal(element: Element) {
+    this.handler.handleExternal(element);
   }
 }
