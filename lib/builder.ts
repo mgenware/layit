@@ -17,11 +17,9 @@ export class Builder {
     this.builtinValidator = new BuiltinValidator();
   }
 
-  build(element: Element) {
-    const children = element.children;
-    for (const child of [...children]) {
-      this.handleElement(child);
-    }
+  build(element: Element): object {
+    const children = [...element.children];
+    return children.map((c) => this.handleElement(c));
   }
 
   private handleElement(element: Element): object {
