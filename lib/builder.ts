@@ -3,6 +3,11 @@ import Handler from './handler';
 import BuiltinValidator from './internal/builtinValidator';
 
 export class Builder {
+  static elementFromXML(xml: string): Element {
+    const parser = new DOMParser();
+    return parser.parseFromString(xml, 'application/xml').documentElement;
+  }
+
   private builtinValidator: BuiltinValidator;
 
   constructor(
