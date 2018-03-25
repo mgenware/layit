@@ -13,4 +13,8 @@ export default class Context {
   handleDefault(element: Element): object {
     return this.defaultHandler(element);
   }
+
+  spawn(element: Element): Context {
+    return new Context(element, this.defaultHandler);
+  }
 }

@@ -1,5 +1,6 @@
 import defs from './defs';
 import Handler from './handler';
+import Context from './context';
 import BuiltinValidator from './internal/builtinValidator';
 
 export class Builder {
@@ -23,7 +24,7 @@ export class Builder {
     }
   }
 
-  private handleElement(element: Element) {
+  private handleElement(element: Element): object {
     const name = element.tagName;
     if (name.length <= 0) {
       throw new Error('Element.tagName is empty');
@@ -31,9 +32,11 @@ export class Builder {
     const children = [...element.children];
     this.builtinValidator.validate(element, children);
 
+    // Create the context
+    const ctx = new Context(element, this.handleContextCallback);
     if (name[0] === name[0].toUpperCase()) {
       // External or Ref
-
+      return this.handleExternal(ctx);
     } else {
       // builtin
       // tslint:disable-next-line no-any
@@ -41,17 +44,19 @@ export class Builder {
       if (!isBuiltin) {
         throw new Error(`The element "${name}" is not a builtin element`);
       }
-
-      // Validate builtin element
-      this.handleBuiltin(element);
+      return this.handleBuiltin(ctx);
     }
   }
 
-  private handleBuiltin(element: Element) {
-    this.handler.handleBuiltin(element);
+  private handleBuiltin(ctx: Context): object {
+    return this.handler.handleBuiltin(ctx);
   }
 
-  private handleExternal(element: Element) {
-    this.handler.handleExternal(element);
+  private handleExternal(ctx: Context): object {
+    return this.handler.handleExternal(ctx);
+  }
+
+  private handleContextCallback(element: Element): object {
+    return this.handleElement(element);
   }
 }
