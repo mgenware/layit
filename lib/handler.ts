@@ -1,13 +1,15 @@
+import Context from './context';
+
 export default class Handler {
-  handleBuiltin(element: Element): object {
+  handleBuiltin(ctx: Context): object {
     throw new Error('Not implemented yet');
   }
 
-  handleExternal(element: Element): object {
+  handleExternal(ctx: Context): object {
     throw new Error('Not implemented yet');
   }
 
-  handleRef(obj: object, element: Element): object {
+  handleRef(obj: object, ctx: Context): object {
     throw new Error('Not implemented yet');
   }
 }
