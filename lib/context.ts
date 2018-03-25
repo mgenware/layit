@@ -7,7 +7,7 @@ export default class Context {
     public defaultHandler: (element: Element) => object,
   ) {
     this.tagName = element.tagName;
-    this.children = [...this.element.children];
+    this.children = [...this.element.children] || [];
   }
 
   handleDefault(element: Element): object {
