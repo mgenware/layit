@@ -8,11 +8,11 @@ export default class TestHandler extends Handler {
     return ret;
   }
 
-  handleExternal(ctx: Context): object {
+  handleExternal(_ctx: Context): object {
     throw new Error('Not implemented yet');
   }
 
-  handleRef(obj: object, ctx: Context): object {
+  handleRef(_obj: object, _ctx: Context): object {
     throw new Error('Not implemented yet');
   }
 }

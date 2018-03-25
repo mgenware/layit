@@ -18,7 +18,7 @@ export default class BuiltinValidator {
     }
   }
 
-  private hasChild(element: Element, children: Element[]) {
+  private hasChild(_element: Element, children: Element[]) {
     if (children.length <= 0) {
       throw new Error('Element must have at least one child');
     }

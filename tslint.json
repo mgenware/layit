@@ -19,6 +19,7 @@
         "max-classes-per-file": false,
         "no-any": true,
         "strict-type-predicates": true,
+        "variable-name": false,
         "strict-boolean-expressions": [
             true,
             "allow-null-union",
