@@ -18,6 +18,11 @@ export class Builder {
   }
 
   build(element: Element): object {
+    // Validate root element
+    if (element.tagName !== defs.rootTagName) {
+      throw new Error(`Root tag element must be ${defs.rootTagName}`);
+    }
+
     const children = [...element.children];
     return children.map((c) => this.handleElement(c));
   }
@@ -31,7 +36,7 @@ export class Builder {
     this.builtinValidator.validate(element, children);
 
     // Create the context
-    const ctx = new Context(element, this.handleContextCallback);
+    const ctx = new Context(element, this.handleContextCallback.bind(this));
     if (name[0] === name[0].toUpperCase()) {
       // External or Ref
       return this.handleExternal(ctx);
