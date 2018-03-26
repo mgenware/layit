@@ -3,4 +3,5 @@ export default {
     v: 'v',
     h: 'h',
   },
+  rootTagName: 'layit',
 };
