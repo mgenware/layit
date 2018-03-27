@@ -12,4 +12,8 @@ export default class Handler {
   handleRef(_ref: object, _ctx: Context): object {
     throw new Error('Not implemented yet');
   }
+
+  throwNotSupportedTagName(tagName: string) {
+    throw new Error(`The tag "${tagName}" is not supported`);
+  }
 }
