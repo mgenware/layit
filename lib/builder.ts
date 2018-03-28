@@ -33,7 +33,11 @@ export class Builder {
       throw new Error('Element.tagName is empty');
     }
     const children = [...element.children];
-    this.builtinValidator.validate(element, children);
+    try {
+      this.builtinValidator.validate(element, children);
+    } catch (err) {
+      throw new Error(`Element "${name}" validation failed with: ${err.message}`);
+    }
 
     // Create the context
     const ctx = new Context(element, this.handleContextCallback.bind(this));
@@ -42,11 +46,6 @@ export class Builder {
       return this.handleExternal(ctx);
     } else {
       // builtin
-      // tslint:disable-next-line no-any
-      const isBuiltin = (defs.builtin as any)[name];
-      if (!isBuiltin) {
-        throw new Error(`The element "${name}" is not a builtin element`);
-      }
       return this.handleBuiltin(ctx);
     }
   }
