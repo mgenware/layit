@@ -1,7 +1,6 @@
 import defs from './defs';
 import Handler from './handler';
 import Context from './context';
-import BuiltinValidator from './internal/builtinValidator';
 
 export class Builder {
   static elementFromXML(xml: string): Element {
@@ -9,13 +8,9 @@ export class Builder {
     return parser.parseFromString(xml, 'application/xml').documentElement;
   }
 
-  private builtinValidator: BuiltinValidator;
-
   constructor(
     public handler: Handler,
-  ) {
-    this.builtinValidator = new BuiltinValidator();
-  }
+  ) { }
 
   build(element: Element): any {
     // Validate root element
