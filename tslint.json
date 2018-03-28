@@ -17,7 +17,7 @@
         "align": false,
         "object-literal-sort-keys": false,
         "max-classes-per-file": false,
-        "no-any": true,
+        "no-any": false,
         "strict-type-predicates": true,
         "variable-name": false
     },
