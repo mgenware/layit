@@ -17,7 +17,7 @@ export class Builder {
     this.builtinValidator = new BuiltinValidator();
   }
 
-  build(element: Element): object {
+  build(element: Element): any {
     // Validate root element
     if (element.tagName !== defs.rootTagName) {
       throw new Error(`Root tag element must be ${defs.rootTagName}`);
