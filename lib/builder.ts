@@ -27,13 +27,6 @@ export class Builder {
     if (name.length <= 0) {
       throw new Error('Element.tagName is empty');
     }
-    const children = [...element.children];
-    try {
-      this.builtinValidator.validate(element, children);
-    } catch (err) {
-      throw new Error(`Element "${name}" validation failed with: ${err.message}`);
-    }
-
     // Create the context
     const ctx = new Context(element, this.handleContextCallback.bind(this));
     if (name[0] === name[0].toUpperCase()) {
