@@ -18,8 +18,14 @@ export class Builder {
       throw new Error(`Root tag element must be ${defs.rootTagName}`);
     }
 
-    const children = [...element.children];
-    return children.map((c) => this.handleElement(c));
+    const children = [...element.children] || [];
+    if (children.length > 1) {
+      throw new Error(`<layit> can only contain at most 1 child element`);
+    }
+    if (children.length < 1) {
+      throw new Error(`No child elements found in <layit>`);
+    }
+    return this.handleElement(children[0]);
   }
 
   private handleElement(element: Element): object {
