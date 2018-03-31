@@ -5,7 +5,15 @@ import Context from './context';
 export class Builder {
   static elementFromXML(xml: string): Element {
     const parser = new DOMParser();
-    return parser.parseFromString(xml, 'application/xml').documentElement;
+    const body = parser.parseFromString(xml, 'text/html').documentElement;
+
+    if (!body || !body.firstElementChild) {
+      throw new Error(`No root element found, empty string or invalid HTML encountered`);
+    }
+    if (body.childElementCount > 1) {
+      throw new Error(`Only 1 root element is allowed, got ${body.childElementCount}.`);
+    }
+    return body.firstElementChild;
   }
 
   constructor(
@@ -15,7 +23,7 @@ export class Builder {
   build(element: Element): any {
     // Validate root element
     if (element.tagName !== defs.rootTagName) {
-      throw new Error(`Root tag element must be ${defs.rootTagName}`);
+      throw new Error(`Root tag element must be "${defs.rootTagName}", got "${element.tagName}".`);
     }
 
     const children = [...element.children] || [];
