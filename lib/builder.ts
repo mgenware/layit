@@ -22,7 +22,7 @@ export class Builder {
 
   build(element: Element): any {
     // Validate root element
-    if ((element.tagName || '').toLowerCase() !== defs.rootTagName) {
+    if (element.tagName !== defs.rootTagName) {
       throw new Error(`Root tag element must be "${defs.rootTagName}", got "${element.tagName}".`);
     }
 
