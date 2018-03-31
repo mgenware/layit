@@ -5,7 +5,7 @@ import Context from './context';
 export class Builder {
   static elementFromXML(xml: string): Element {
     const parser = new DOMParser();
-    const body = parser.parseFromString(xml, 'text/html').documentElement;
+    const body = parser.parseFromString(xml, 'text/html').body;
 
     if (!body || !body.firstElementChild) {
       throw new Error(`No root element found, empty string or invalid HTML encountered`);
