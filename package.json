@@ -33,7 +33,7 @@
     "prepublishOnly": "yarn run test",
     "lint": "tslint --project tsconfig.json --config tslint.json",
     "copy": "copyfiles \"tests/data/**/*.*\" \"dist\"",
-    "clean:dist": "rimraf -rf dist",
+    "clean:dist": "rimraf dist",
     "clean": "npm run clean:dist"
   },
   "engines": {
