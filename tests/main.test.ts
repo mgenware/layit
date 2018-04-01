@@ -6,20 +6,20 @@ test('Test handler: plain text child', () => {
   const builder = new Builder(handler);
   const element = Builder.elementFromXML('<layit><h><h><view></view></h><v><h><view></view></h></v></h></layit>');
   expect(builder.build(element)).toEqual({
-    h: [
+    H: [
       {
-        h: [
+        H: [
           {
-            view: [],
+            VIEW: [],
           },
         ],
       },
       {
-        v: [
+        V: [
           {
-            h: [
+            H: [
               {
-                view: [],
+                VIEW: [],
               },
             ],
           },

@@ -22,7 +22,7 @@ export class Builder {
 
   build(element: Element): any {
     // Validate root element
-    if (element.tagName.toLowerCase() !== defs.rootTagName) {
+    if (element.tagName !== defs.rootTagName) {
       throw new Error(`Root tag element must be "${defs.rootTagName}", got "${element.tagName}".`);
     }
 
@@ -43,7 +43,21 @@ export class Builder {
     }
     // Create the context
     const ctx = new Context(element, this.handleContextCallback.bind(this));
-    return this.handler.handleElement(ctx);
+    if (name[0] === name[0].toUpperCase()) {
+      // External or Ref
+      return this.handleExternal(ctx);
+    } else {
+      // builtin
+      return this.handleBuiltin(ctx);
+    }
+  }
+
+  private handleBuiltin(ctx: Context): object {
+    return this.handler.handleBuiltin(ctx);
+  }
+
+  private handleExternal(ctx: Context): object {
+    return this.handler.handleExternal(ctx);
   }
 
   private handleContextCallback(element: Element): object {
