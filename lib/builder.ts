@@ -5,30 +5,33 @@ import { DOMParser } from 'xmldom';
 import { outerXML } from './util';
 
 export class Builder {
-  static elementFromXML(xml: string): Element {
+  static documentFromXML(xml: string): Document {
     const parser = new DOMParser();
-    const root = parser.parseFromString(xml).documentElement;
-
-    if (!root) {
-      throw new Error(`No root element found, empty string or invalid HTML encountered`);
-    }
-    return root;
+    const document = parser.parseFromString(xml);
+    return document;
   }
+
+  private document: Document;
 
   constructor(
     public handler: Handler,
   ) { }
 
-  build(element: Element): any {
+  build(document: Document): any {
+    this.document = document;
+
     // Validate root element
+    if (!document || !document.documentElement) {
+      throw new Error(`No root element found, empty string or invalid HTML encountered`);
+    }
+    const element = document.documentElement;
     if (element.tagName !== defs.rootTagName) {
       throw new Error(`Root tag element must be "${defs.rootTagName}", got "${element.tagName}".`);
     }
 
-    const rootCtx = new Context(element, this.handleContextCallback.bind(this));
+    const rootCtx = new Context(document, element, this.handleContextCallback.bind(this));
     if (rootCtx.children.length > 1) {
       throw new Error(`<layit> can only contain at most 1 child element, got ${rootCtx.children.length}, XML: ${outerXML(rootCtx.element)}`);
-
     }
     if (rootCtx.children.length < 1) {
       throw new Error(`No child elements found in <layit>`);
@@ -42,7 +45,7 @@ export class Builder {
       throw new Error('Element.tagName is empty');
     }
     // Create the context
-    const ctx = new Context(element, this.handleContextCallback.bind(this));
+    const ctx = new Context(this.document, element, this.handleContextCallback.bind(this));
     // Invoke handleElement
     return this.handler.handleElement(ctx);
   }

@@ -3,6 +3,7 @@ export default class Context {
   public tagName: string;
 
   constructor(
+    public document: Document,
     public element: Element,
     public defaultHandler: (element: Element) => object,
   ) {
@@ -15,14 +16,17 @@ export default class Context {
   }
 
   spawn(element: Element): Context {
-    return new Context(element, this.defaultHandler);
+    return new Context(this.document, element, this.defaultHandler);
   }
 
   private nodeListToArray(nodeList: NodeList): Element[] {
     if (nodeList && nodeList.length) {
       const ret: Element[] = [];
       for (let i = 0; i < nodeList.length; i++) {
-        ret.push(nodeList.item(i) as Element);
+        const node = nodeList.item(i);
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          ret.push(nodeList.item(i) as Element);
+        }
       }
       return ret;
     }
