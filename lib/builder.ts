@@ -2,6 +2,7 @@ import defs from './defs';
 import Handler from './handler';
 import Context from './context';
 import { DOMParser } from 'xmldom';
+import { outerXML } from './util';
 
 export class Builder {
   static elementFromXML(xml: string): Element {
@@ -26,7 +27,9 @@ export class Builder {
 
     const rootCtx = new Context(element, this.handleContextCallback.bind(this));
     if (rootCtx.children.length > 1) {
-      throw new Error(`<layit> can only contain at most 1 child element`);
+      console.log('----== ', rootCtx.children);
+      throw new Error(`<layit> can only contain at most 1 child element, got ${rootCtx.children.length}, XML: ${outerXML(rootCtx.element)}`);
+
     }
     if (rootCtx.children.length < 1) {
       throw new Error(`No child elements found in <layit>`);
