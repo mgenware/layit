@@ -27,7 +27,6 @@ export class Builder {
 
     const rootCtx = new Context(element, this.handleContextCallback.bind(this));
     if (rootCtx.children.length > 1) {
-      console.log('----== ', rootCtx.children);
       throw new Error(`<layit> can only contain at most 1 child element, got ${rootCtx.children.length}, XML: ${outerXML(rootCtx.element)}`);
 
     }
