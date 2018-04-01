@@ -19,7 +19,8 @@
         "max-classes-per-file": false,
         "no-any": false,
         "strict-type-predicates": true,
-        "variable-name": false
+        "variable-name": false,
+        "max-line-length": false
     },
     "rulesDirectory": []
 }
