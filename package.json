@@ -8,7 +8,7 @@
   "homepage": "https://github.com/mgenware/layit",
   "bugs": "https://github.com/mgenware/layit/issues",
   "keywords": [
-    "layout"
+    "layout", "layit"
   ],
   "repository": {
     "type": "git",
