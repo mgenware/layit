@@ -1,6 +1,6 @@
 {
   "name": "layit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A universal layout language",
   "main": "dist/lib/main.js",
   "types": "dist/lib/main.d.ts",
@@ -42,5 +42,10 @@
   },
   "dependencies": {
     "xmldom": "^0.1.27"
-  }
+  },
+  "files":[
+    "dist/lib",
+    ".gitignore",
+    "README.md"
+  ]
 }
