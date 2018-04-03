@@ -4,22 +4,22 @@ import TestHandler from './testHandler';
 test('Test handler: plain text child', () => {
   const handler = new TestHandler();
   const builder = new Builder(handler);
-  const doc = Builder.documentFromXML('<layit><h><h><View></View></h><v><h><View></View></h></v></h></layit>');
+  const doc = Builder.documentFromXML('<layit><H><H><view></view></H><V><H><view></view></H></V></H></layit>');
   expect(builder.build(doc)).toEqual({
-    h: [
+    'H-b': [
       {
-        h: [
+        'H-b': [
           {
-            View: [],
+            'view-e': [],
           },
         ],
       },
       {
-        v: [
+        'V-b': [
           {
-            h: [
+            'H-b': [
               {
-                View: [],
+                'view-e': [],
               },
             ],
           },

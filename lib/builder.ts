@@ -46,8 +46,13 @@ export class Builder {
     }
     // Create the context
     const ctx = new Context(this.document, element, this.handleContextCallback.bind(this));
-    // Invoke handleElement
-    return this.handler.handleElement(ctx);
+    // Handle the element
+    if (name[0].toUpperCase() === name[0]) {
+      // Elements start with an uppercase letter are considered builtin elements
+      return this.handler.handleBuiltin(ctx);
+    } else {
+      return this.handler.handleExternal(ctx);
+    }
   }
 
   private handleContextCallback(element: Element): any {

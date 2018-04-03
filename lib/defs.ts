@@ -1,7 +1,7 @@
 export default {
   builtin: {
-    v: 'v',
-    h: 'h',
+    v: 'V',
+    h: 'H',
   },
   rootTagName: 'layit',
 };
