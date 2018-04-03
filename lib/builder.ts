@@ -25,8 +25,8 @@ export class Builder {
       throw new Error(`No root element found, empty string or invalid HTML encountered`);
     }
     const element = document.documentElement;
-    if (element.tagName !== defs.rootTagName) {
-      throw new Error(`Root tag element must be "${defs.rootTagName}", got "${element.tagName}".`);
+    if (element.tagName !== defs.layit) {
+      throw new Error(`Root tag element must be "${defs.layit}", got "${element.tagName}".`);
     }
 
     const rootCtx = new Context(document, element, this.handleContextCallback.bind(this));
