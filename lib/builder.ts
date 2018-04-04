@@ -1,7 +1,7 @@
 import defs from './defs';
 import Handler from './handler';
 import Context from './context';
-import { DOMParser } from 'xmldom';
+import { DOMParser } from 'xmldom-alpha-ex';
 import { outerXML } from './util';
 
 export class Builder {
