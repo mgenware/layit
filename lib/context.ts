@@ -12,6 +12,10 @@ export default class Context {
   }
 
   handleDefault(element: Element): object {
+    if (!element) {
+      throw new Error('The element parameter is not specified');
+    }
+
     return this.defaultHandler(element);
   }
 

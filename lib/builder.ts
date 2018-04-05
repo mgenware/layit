@@ -18,6 +18,9 @@ export class Builder {
   ) { }
 
   build(document: Document): any {
+    if (!document) {
+      throw new Error('The document parameter is not specified');
+    }
     this.document = document;
 
     // Validate root element
@@ -40,6 +43,10 @@ export class Builder {
   }
 
   private handleElement(element: Element): any {
+    if (!element) {
+      throw new Error('The element parameter is not specified');
+    }
+
     const name = element.tagName;
     if (name.length <= 0) {
       throw new Error('Element.tagName is empty');
