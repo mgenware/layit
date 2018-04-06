@@ -1,6 +1,6 @@
 {
   "name": "layit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A universal layout language",
   "main": "dist/lib/main.js",
   "types": "dist/lib/main.d.ts",
