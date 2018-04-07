@@ -27,7 +27,7 @@ export class Builder {
     if (!rootElement) {
       throw new Error(`No root element found, empty string or invalid HTML encountered`);
     }
-    if (rootElement.tagName !== defs.layit) {
+    if (rootElement.tagName !== defs.layit.toUpperCase()) {
       throw new Error(`Root tag element must be "${defs.layit}", got "${rootElement.tagName}".`);
     }
 
