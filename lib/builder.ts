@@ -1,7 +1,7 @@
 import defs from './defs';
 import Handler from './handler';
 import Context from './context';
-import { outerXML, rootElementFromDocument } from './util';
+import Util from './util';
 import { JSDOM } from 'jsdom';
 
 export class Builder {
@@ -23,7 +23,7 @@ export class Builder {
     this.document = document;
 
     // Validate root element
-    const rootElement = rootElementFromDocument(document);
+    const rootElement = Util.rootElementFromDocument(document);
     if (!rootElement) {
       throw new Error(`No root element found, empty string or invalid HTML encountered`);
     }
@@ -32,13 +32,13 @@ export class Builder {
     }
 
     const rootCtx = new Context(document, rootElement, this.handleContextCallback.bind(this));
-    if (rootCtx.children.length > 1) {
-      throw new Error(`<layit> can only contain at most 1 child element, got ${rootCtx.children.length}, XML: ${outerXML(rootCtx.element)}`);
+    if (rootCtx.childElements.length > 1) {
+      throw new Error(`<layit> can only contain at most 1 child element, got ${rootCtx.childElements.length}, XML: ${Util.outerXML(rootCtx.element)}`);
     }
-    if (rootCtx.children.length < 1) {
+    if (rootCtx.childElements.length < 1) {
       throw new Error(`No child elements found in <layit>`);
     }
-    return this.handleElement(rootCtx.children[0]);
+    return this.handleElement(rootCtx.childElements[0]);
   }
 
   private handleElement(element: Element): any {

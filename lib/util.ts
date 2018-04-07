@@ -1,7 +1,30 @@
-export function outerXML(element: Element): string {
-  return element.outerHTML;
-}
+export default class Util {
+  static outerXML(element: Element): string {
+    this.checkElement(element);
+    return element.outerHTML;
+  }
 
-export function rootElementFromDocument(document: Document): Element|null {
-  return document.body.firstElementChild;
+  static rootElementFromDocument(document: Document): Element|null {
+    this.checkDocument(document);
+    return document.body.firstElementChild;
+  }
+
+  static getAndRemoveAttribute(element: Element, name: string): string {
+    this.checkElement(element);
+    const attr = element.getAttribute(name) || '';
+    element.removeAttribute(name);
+    return attr;
+  }
+
+  private static checkDocument(document: Document) {
+    if (!document) {
+      throw new Error('Undefined document parameter');
+    }
+  }
+
+  private static checkElement(element: Element) {
+    if (!element) {
+      throw new Error('Undefined element parameter');
+    }
+  }
 }
