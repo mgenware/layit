@@ -1,5 +1,7 @@
-import { XMLSerializer } from 'xmldom-alpha-ex';
-
 export function outerXML(element: Element): string {
-  return (new XMLSerializer()).serializeToString(element);
+  return element.outerHTML;
+}
+
+export function rootElementFromDocument(document: Document): Element|null {
+  return document.body.firstElementChild;
 }

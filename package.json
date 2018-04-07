@@ -8,7 +8,8 @@
   "homepage": "https://github.com/mgenware/layit",
   "bugs": "https://github.com/mgenware/layit/issues",
   "keywords": [
-    "layout", "layit"
+    "layout",
+    "layit"
   ],
   "repository": {
     "type": "git",
@@ -42,9 +43,10 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
-    "xmldom-alpha-ex": "^1.0.0"
+    "@types/jsdom": "^11.0.4",
+    "jsdom": "^11.7.0"
   },
-  "files":[
+  "files": [
     "dist/lib",
     ".gitignore",
     "README.md"

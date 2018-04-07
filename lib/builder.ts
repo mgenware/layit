@@ -1,14 +1,13 @@
 import defs from './defs';
 import Handler from './handler';
 import Context from './context';
-import { DOMParser } from 'xmldom-alpha-ex';
-import { outerXML } from './util';
+import { outerXML, rootElementFromDocument } from './util';
+import { JSDOM } from 'jsdom';
 
 export class Builder {
   static documentFromXML(xml: string): Document {
-    const parser = new DOMParser();
-    const document = parser.parseFromString(xml);
-    return document;
+    const dom = new JSDOM(xml);
+    return dom.window.document;
   }
 
   private document: Document;
@@ -24,15 +23,15 @@ export class Builder {
     this.document = document;
 
     // Validate root element
-    if (!document || !document.documentElement) {
+    const rootElement = rootElementFromDocument(document);
+    if (!rootElement) {
       throw new Error(`No root element found, empty string or invalid HTML encountered`);
     }
-    const element = document.documentElement;
-    if (element.tagName !== defs.layit) {
-      throw new Error(`Root tag element must be "${defs.layit}", got "${element.tagName}".`);
+    if (rootElement.tagName !== defs.layit) {
+      throw new Error(`Root tag element must be "${defs.layit}", got "${rootElement.tagName}".`);
     }
 
-    const rootCtx = new Context(document, element, this.handleContextCallback.bind(this));
+    const rootCtx = new Context(document, rootElement, this.handleContextCallback.bind(this));
     if (rootCtx.children.length > 1) {
       throw new Error(`<layit> can only contain at most 1 child element, got ${rootCtx.children.length}, XML: ${outerXML(rootCtx.element)}`);
     }
