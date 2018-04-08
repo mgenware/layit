@@ -3,6 +3,7 @@ import Handler from './handler';
 import Context from './context';
 import Util from './util';
 import { JSDOM } from 'jsdom';
+const DOCUMENT_NODE = 9;
 
 export class Builder {
   static documentFromXML(xml: string): Document {
@@ -20,7 +21,7 @@ export class Builder {
     if (!document) {
       throw new Error('The document parameter is not specified');
     }
-    if (!(document.nodeType && document.nodeType === Node.DOCUMENT_NODE)) {
+    if (!(document.nodeType && document.nodeType === DOCUMENT_NODE)) {
       throw new Error(`The document is not an instance of Document class`);
     }
     this.document = document;
