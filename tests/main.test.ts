@@ -28,3 +28,9 @@ test('Test handler: plain text child', () => {
     ],
   });
 });
+
+test('Invalid parameter', () => {
+  const handler = new TestHandler();
+  const builder = new Builder(handler);
+  expect(() => builder.build('<a></a>' as any)).toThrow();
+});

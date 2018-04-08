@@ -20,6 +20,9 @@ export class Builder {
     if (!document) {
       throw new Error('The document parameter is not specified');
     }
+    if (!(document.nodeType && document.nodeType === Node.DOCUMENT_NODE)) {
+      throw new Error(`The document is not an instance of Document class`);
+    }
     this.document = document;
 
     // Validate root element

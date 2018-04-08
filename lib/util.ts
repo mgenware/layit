@@ -6,6 +6,9 @@ export default class Util {
 
   static rootElementFromDocument(document: Document): Element|null {
     this.checkDocument(document);
+    if (!document.body) {
+      throw new Error('document.body is undefined');
+    }
     return document.body.firstElementChild;
   }
 
