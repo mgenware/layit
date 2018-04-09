@@ -1,14 +1,14 @@
 import defs from './defs';
 import Handler from './handler';
 import Context from './context';
-import { DOMParser } from 'xmldom-alpha-ex';
-import { outerXML } from './util';
+import Util from './util';
+import { JSDOM } from 'jsdom';
+const DOCUMENT_NODE = 9;
 
 export class Builder {
   static documentFromXML(xml: string): Document {
-    const parser = new DOMParser();
-    const document = parser.parseFromString(xml);
-    return document;
+    const dom = new JSDOM(xml);
+    return dom.window.document;
   }
 
   private document: Document;
@@ -21,25 +21,28 @@ export class Builder {
     if (!document) {
       throw new Error('The document parameter is not specified');
     }
+    if (!(document.nodeType && document.nodeType === DOCUMENT_NODE)) {
+      throw new Error(`The document is not an instance of Document class`);
+    }
     this.document = document;
 
     // Validate root element
-    if (!document || !document.documentElement) {
+    const rootElement = Util.rootElementFromDocument(document);
+    if (!rootElement) {
       throw new Error(`No root element found, empty string or invalid HTML encountered`);
     }
-    const element = document.documentElement;
-    if (element.tagName !== defs.layit) {
-      throw new Error(`Root tag element must be "${defs.layit}", got "${element.tagName}".`);
+    if (rootElement.tagName !== defs.layit.toUpperCase()) {
+      throw new Error(`Root tag element must be "${defs.layit}", got "${rootElement.tagName}".`);
     }
 
-    const rootCtx = new Context(document, element, this.handleContextCallback.bind(this));
-    if (rootCtx.children.length > 1) {
-      throw new Error(`<layit> can only contain at most 1 child element, got ${rootCtx.children.length}, XML: ${outerXML(rootCtx.element)}`);
+    const rootCtx = new Context(document, rootElement, this.handleContextCallback.bind(this));
+    if (rootCtx.childElements.length > 1) {
+      throw new Error(`<layit> can only contain at most 1 child element, got ${rootCtx.childElements.length}, XML: ${Util.outerXML(rootCtx.element)}`);
     }
-    if (rootCtx.children.length < 1) {
+    if (rootCtx.childElements.length < 1) {
       throw new Error(`No child elements found in <layit>`);
     }
-    return this.handleElement(rootCtx.children[0]);
+    return this.handleElement(rootCtx.childElements[0]);
   }
 
   private handleElement(element: Element): any {
@@ -54,12 +57,7 @@ export class Builder {
     // Create the context
     const ctx = new Context(this.document, element, this.handleContextCallback.bind(this));
     // Handle the element
-    if (name[0].toUpperCase() === name[0]) {
-      // Elements start with an uppercase letter are considered builtin elements
-      return this.handler.handleBuiltin(ctx);
-    } else {
-      return this.handler.handleExternal(ctx);
-    }
+    return this.handler.handleElement(ctx);
   }
 
   private handleContextCallback(element: Element): any {

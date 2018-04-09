@@ -4,22 +4,22 @@ import TestHandler from './testHandler';
 test('Test handler: plain text child', () => {
   const handler = new TestHandler();
   const builder = new Builder(handler);
-  const doc = Builder.documentFromXML('<layit><H><H><view></view></H><V><H><view></view></H></V></H></layit>');
+  const doc = Builder.documentFromXML('<layit><h><h><view></view></h><v><h><view></view></h></v></h></layit>');
   expect(builder.build(doc)).toEqual({
-    'H-b': [
+    H: [
       {
-        'H-b': [
+        H: [
           {
-            'view-e': [],
+            VIEW: [],
           },
         ],
       },
       {
-        'V-b': [
+        V: [
           {
-            'H-b': [
+            H: [
               {
-                'view-e': [],
+                VIEW: [],
               },
             ],
           },
@@ -27,4 +27,10 @@ test('Test handler: plain text child', () => {
       },
     ],
   });
+});
+
+test('Invalid parameter', () => {
+  const handler = new TestHandler();
+  const builder = new Builder(handler);
+  expect(() => builder.build('<a></a>' as any)).toThrow();
 });
