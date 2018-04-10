@@ -7,6 +7,8 @@ export class Defs {
   readonly boxMargin = 'margin';
   readonly boxVAlign = 'v-align';
   readonly boxHAlign = 'h-align';
+  readonly boxWidth = 'width';
+  readonly boxHeight = 'height';
 }
 
 export default new Defs();
