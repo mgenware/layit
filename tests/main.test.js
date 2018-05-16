@@ -1,5 +1,5 @@
-import { Builder } from '../lib/main';
-import TestHandler from './testHandler';
+const { Builder } = require('..');
+const TestHandler = require('./testHandler');
 
 test('Test handler: plain text child', () => {
   const handler = new TestHandler();
@@ -32,5 +32,5 @@ test('Test handler: plain text child', () => {
 test('Invalid parameter', () => {
   const handler = new TestHandler();
   const builder = new Builder(handler);
-  expect(() => builder.build('<a></a>' as any)).toThrow();
+  expect(() => builder.build('<a></a>')).toThrow();
 });
